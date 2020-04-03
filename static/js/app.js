@@ -1,8 +1,8 @@
+let stateDD = d3.select("#selDataset");
+
 //add the ul for the states
 function addStateDD(states){
     //var ul = d3.select(".state").append('ul');
-    
-    let stateDD = d3.select("#selDataset");
     
     stateDD.append("option").text("--Select a State--");
     
@@ -15,14 +15,9 @@ function addStateDD(states){
         });  
 }
 
-// Send the same request
-fetch('/states')
-    .then(function (response) {
-        return response.json(); // But parse it as JSON this time
-    })
+// Get the list of distinct states for populating the drop down select list on the page
+d3.json('/states')
     .then(function (json) {
-        console.log('GET response as JSON:');
-        console.log(json); // Here’s our JSON object
 
         statesArray = [];
 
@@ -32,9 +27,42 @@ fetch('/states')
             statesArray.push(obj.state);
         }
 
-        //console.log(statesArray);
         addStateDD(statesArray)
-    })
 
+    }).catch(err => {
+        // Do something for an error here
+        console.log("Error Reading data " + err);
+      });       
 
+// reference UCF Bootcamp Interactive Viz Lecture Day 2 - Activity 7
+d3.selectAll("body").on("change", updatePage);
+
+//Update the visualizations based on the subject selected
+function updatePage(){
+    // get the selected subject Id
+    let theState = stateDD.property("value");
+    console.log(theState);
   
+    if (theState != "--Select a State--") {
+      //Prevent the page from reloading with D3
+      d3.event.preventDefault();
+     }
+     else{
+       theState = "FL";
+       console.log("subject if/else");
+     };
+
+    //Get the state specific data for analysis
+    d3.json(`/state_data/${theState}`)
+    .then(function (json) {
+        console.log('GET response as JSON:');
+        console.log(json); // Here’s our JSON object
+
+    }).catch(err => {
+        // Do something for an error here
+        console.log("Error Reading data " + err);
+      });     
+
+     };
+
+updatePage();
