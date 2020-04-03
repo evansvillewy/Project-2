@@ -60,6 +60,29 @@ def names():
 
     return jsonify(results.to_dict (orient='records'))
 
+@app.route("/state_data/<theState>")
+def state_data(theState):
+
+    app.logger.info(f'{theState} state data endpoint - app.logger.info')
+
+    # Create session link from Python to database
+    session = Session(db.engine)  
+
+    """Return a list of states."""
+
+    # Use Pandas to perform the sql query
+    stmt = (f'''SELECT a.id,a.source,a.severity,a.start_time,a.street,a.side,a.city,
+                a.county,a.state,a.zipcode,a.timezone,a.temperature,a.wind_chill,
+                a.humidity,a.visibility,a.wind_speed,a.weather_condition,a.sunrise_sunset
+                FROM accidents a WHERE state = '{theState}';''')
+
+    results = pd.read_sql_query(stmt, db.session.bind)
+    results = results.fillna('')
+
+    session.close()
+
+    return jsonify(results.to_dict (orient='records'))
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
