@@ -13,7 +13,8 @@ function addStateDD(states){
         .append("option")
             .text(row)
         });  
-}
+};
+
 // Get the list of distinct states for populating the drop down select list on the page
 d3.json('/states')
     .then(function (json) {
@@ -26,25 +27,21 @@ d3.json('/states')
             statesArray.push(obj.state);
         }
 
-        addStateDD(statesArray)
+        addStateDD(statesArray);
 
     }).catch(err => {
         // Do something for an error here
         console.log("Error Reading data " + err);
       });       
 
-      
 // reference UCF Bootcamp Interactive Viz Lecture Day 2 - Activity 7
 d3.selectAll("body").on("change", updatePage);
 
 function updateLine(theState) {
-    console.log(theState);
 
     // Get the state specific data for analysis
     d3.json(`/state_data/hour/${theState}`)
     .then(function (json) {
-        console.log('GET response as JSON:');
-        console.log(json); // Here’s our JSON object
 
     let x = [];
     let y = [];
@@ -75,54 +72,54 @@ function updateLine(theState) {
     });
     };
 
-
     function updatebar1(theState){
-        console.log(theState);
+
         //Get the state specific data for analysis
         d3.json(`/state_data/weekday/${theState}`)
         .then(function (json) {
-            console.log('GET response as JSON:');
-            console.log(json); // Here’s our JSON object
+
             y = [];
             x = [];
             for(var i = 0; i < json.length; i++) {
                 var obj = json[i];
                 y.push(obj.accident_count);
                 x.push(obj.weekday);
-            }
+            };
+
         // Create a bar chart for the accident count by day
         let trace1 = {
             x: x,
             y: y,
             type: "bar",
-            //orientation: "h",
-            //text: top_otu_labels,
         };
+
         let content = [trace1];
         let layout = {
             yaxis:{title:"Accident Count"},
             xaxis:{title:"Weekday"}
         };
+
         Plotly.newPlot("bar",content,layout);
         }).catch(err => {
             // Do something for an error here
             console.log("Error Reading data " + err);
           });     
     };
+
     function updatebar2(theState){
-        console.log(theState);
+
         //Get the state specific data for analysis
         d3.json(`/state_data/count_by_day/${theState}`)
         .then(function (json) {
-            console.log('GET response as JSON:');
-            console.log(json); // Here’s our JSON object
+
             y = [];
             x = [];
             for(var i = 0; i < 11; i++) {
                 var obj = json[i];
                 y.push(obj.accident_date);
                 x.push(obj.accident_count);
-            }
+            };
+
         // Create a horizontal bar chart for the top 10 accident days
         let trace1 = {
             x: x,
@@ -131,11 +128,14 @@ function updateLine(theState) {
             orientation: "h",
             //text: top_otu_labels,
         };
+
         let content = [trace1];
+
         let layout = {
             yaxis:{title:"Accident Date"},
             xaxis:{title:"Accident Count"}
         };
+
         Plotly.newPlot("bar2",content,layout);
         }).catch(err => {
             // Do something for an error here
@@ -143,8 +143,6 @@ function updateLine(theState) {
           });     
     };
     
-
-
 //Update the visualizations based on the subject selected
 function updatePage(){
     // get the selected subject Id
@@ -166,3 +164,4 @@ function updatePage(){
 
      };
 
+updatePage();
