@@ -1,0 +1,52 @@
+body{
+  font-family: 'Roboto' ;
+}
+
+h1{
+  font-family: 'Roboto';
+  color:darkblue;
+}
+
+h2{
+  font-family: 'Roboto';
+  color:darkblue;
+}
+
+h3{
+    font-family: 'Roboto';
+    color:darkblue;
+    background-color:#1371a4;
+    margin: 0px;
+    padding: 0px;
+    color:white;
+  }
+
+h4{
+  font-family: 'Roboto';
+  color:darkblue;
+  background-color:#1371a4;
+  color:white;
+}
+
+p{
+  font-family: 'Roboto' ;
+  color:black;
+}
+
+#map{
+  margin-right: 5px;
+
+}
+
+.row > div > col{
+  margin: 0px;
+  padding: 0px;
+  outline: 2px solid #ccc;
+  outline-offset: -10px;
+  -moz-outline-radius: 10px;
+  -webkit-outline-radius: 10px;
+}
+
+
+
+

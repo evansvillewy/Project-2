@@ -20,28 +20,6 @@ function addStateDD(states){
     console.log("theState"+theState);        
 };
 
-// Get the list of distinct states for populating the drop down select list on the page
-d3.json('/states')
-    .then(function (json) {
-
-        statesArray = [];
-
-        for(var i = 0; i < json.length; i++) {
-            var obj = json[i];
-        
-            statesArray.push(obj.state);
-        }
-
-        addStateDD(statesArray);
-
-    }).catch(err => {
-        // Do something for an error here
-        console.log("Error Reading data " + err);
-      });       
-
-// reference UCF Bootcamp Interactive Viz Lecture Day 2 - Activity 7
-d3.selectAll("body").on("change", updatePage);
-
 function updateLine(theState) {
 
     // Get the state specific data for analysis
@@ -75,7 +53,7 @@ function updateLine(theState) {
         // Do something for an error here
         console.log("Error Reading data " + err);
     });
-    };
+};
 
     function updatebar1(theState){
 
@@ -109,7 +87,7 @@ function updateLine(theState) {
             // Do something for an error here
             console.log("Error Reading data " + err);
           });     
-    };
+};
 
     function updatebar2(theState){
 
@@ -146,7 +124,7 @@ function updateLine(theState) {
             // Do something for an error here
             console.log("Error Reading data " + err);
           });     
-    };
+};
     
 //Update the visualizations based on the subject selected
 function updatePage(){
@@ -169,7 +147,28 @@ function updatePage(){
     updateLine(theState);
     updatebar1(theState);
     updatebar2(theState);
+};
 
-     };
+// Get the list of distinct states for populating the drop down select list on the page
+d3.json('/states')
+    .then(function (json) {
 
-     updatePage();
+        statesArray = [];
+
+        for(var i = 0; i < json.length; i++) {
+            var obj = json[i];
+        
+            statesArray.push(obj.state);
+        }
+
+        addStateDD(statesArray);
+
+    }).catch(err => {
+        // Do something for an error here
+        console.log("Error Reading data " + err);
+      });       
+
+// reference UCF Bootcamp Interactive Viz Lecture Day 2 - Activity 7
+d3.selectAll("body").on("change", updatePage);
+
+updatePage();
