@@ -3,7 +3,8 @@ let stateDD = d3.select("#selDataset");
 //add the ul for the states
 function addStateDD(states){
     //var ul = d3.select(".state").append('ul');
-    
+    let stateDD = d3.select("#selDataset");
+
     stateDD.append("option").text("--Select a State--");
     
     // add the subjects to the select list
@@ -13,6 +14,10 @@ function addStateDD(states){
         .append("option")
             .text(row)
         });  
+
+    let theState = stateDD.property("value");
+    console.log("called addStateDD");
+    console.log("theState"+theState);        
 };
 
 // Get the list of distinct states for populating the drop down select list on the page
@@ -145,17 +150,20 @@ function updateLine(theState) {
     
 //Update the visualizations based on the subject selected
 function updatePage(){
-    // get the selected subject Id
-    let theState = stateDD.property("value");
-    console.log(theState);
+    // get the selected Statwe
+    let theState = "--Select a State--"
+    let stateDD = d3.select("#selDataset");
+    theState = stateDD.property("value");
   
-    if (theState != "--Select a State--") {
+    if (theState != "--Select a State--" && theState && typeof theState != undefined) {
       //Prevent the page from reloading with D3
       d3.event.preventDefault();
      }
      else{
        theState = "FL";
        console.log("subject if/else");
+       let alert = d3.select("#alert");
+       alert.text('Clicked '+theState );
      };
 
     updateLine(theState);
@@ -164,4 +172,4 @@ function updatePage(){
 
      };
 
-updatePage();
+     updatePage();
