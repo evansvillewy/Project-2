@@ -38,13 +38,10 @@ d3.json('/states')
 d3.selectAll("body").on("change", updatePage);
 
 function updateLine(theState) {
-    console.log(theState);
 
     // Get the state specific data for analysis
     d3.json(`/state_data/hour/${theState}`)
     .then(function (json) {
-        console.log('GET response as JSON:');
-        console.log(json); // Here’s our JSON object
 
     let x = [];
     let y = [];
@@ -77,12 +74,11 @@ function updateLine(theState) {
 
 
     function updatebar1(theState){
-        console.log(theState);
+
         //Get the state specific data for analysis
         d3.json(`/state_data/weekday/${theState}`)
         .then(function (json) {
-            console.log('GET response as JSON:');
-            console.log(json); // Here’s our JSON object
+
             y = [];
             x = [];
             for(var i = 0; i < json.length; i++) {
@@ -110,12 +106,11 @@ function updateLine(theState) {
           });     
     };
     function updatebar2(theState){
-        console.log(theState);
+
         //Get the state specific data for analysis
         d3.json(`/state_data/count_by_day/${theState}`)
         .then(function (json) {
-            console.log('GET response as JSON:');
-            console.log(json); // Here’s our JSON object
+
             y = [];
             x = [];
             for(var i = 0; i < 11; i++) {
@@ -143,13 +138,10 @@ function updateLine(theState) {
           });     
     };
     
-
-
 //Update the visualizations based on the subject selected
 function updatePage(){
     // get the selected subject Id
     let theState = stateDD.property("value");
-    console.log(theState);
   
     if (theState != "--Select a State--") {
       //Prevent the page from reloading with D3
@@ -166,3 +158,4 @@ function updatePage(){
 
      };
 
+updatePage();

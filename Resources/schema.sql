@@ -16,5 +16,7 @@ create table if not exists accidents(
     visibility real,
     wind_speed real ,
     weather_condition text,
-    sunrise_sunset text
+    sunrise_sunset text,
+	lat real,
+	lon real
 );
