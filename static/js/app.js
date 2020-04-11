@@ -55,75 +55,158 @@ function updateLine(theState) {
     });
 };
 
-    function updatebar1(theState){
+// Source reference: https://plotly.com/javascript/plotlyjs-events/#hover-event
+var barPlot;
+var bar2Plot;
 
-        //Get the state specific data for analysis
-        d3.json(`/state_data/weekday/${theState}`)
-        .then(function (json) {
+function updatebar1New(theState){
 
-            y = [];
-            x = [];
-            for(var i = 0; i < json.length; i++) {
-                var obj = json[i];
-                y.push(obj.accident_count);
-                x.push(obj.weekday);
-            };
+    //Get the state specific data for analysis
+    d3.json(`/state_data/weekday/${theState}`)
+    .then(function (json) {
 
-        // Create a bar chart for the accident count by day
-        let trace1 = {
-            x: x,
-            y: y,
-            type: "bar",
+        y = [];
+        x = [];
+        for(var i = 0; i < json.length; i++) {
+            var obj = json[i];
+            y.push(obj.accident_count);
+            x.push(obj.weekday);
         };
 
-        let content = [trace1];
-        let layout = {
-            yaxis:{title:"Accident Count"},
-            xaxis:{title:"Weekday"}
-        };
+    barPlot = document.getElementById('bar'),
+     x = x,
+     y = y,
+     colors =['#1371a4','#1371a4','#1371a4',
+              '#1371a4','#1371a4','#1371a4',
+              '#1371a4'],
+     data = [{x:x, y:y,
+              type:'bar',
+              mode:'markers',marker:{color:colors}}],
+     layout = {
+         hovermode:'closest',
+         yaxis:{title:"Accident Count"},
+         xaxis:{title:"Weekday"}
+      };
 
-        Plotly.newPlot("bar",content,layout);
-        }).catch(err => {
-            // Do something for an error here
-            console.log("Error Reading data " + err);
-          });     
+    Plotly.newPlot("bar",data,layout);
+
+    barPlot.on('plotly_hover', function(data){
+        console.log(data);
+        var pn='',
+            tn='',
+            pi='',
+            colors=[];
+        for(var i=0; i < data.points.length; i++){
+          console.log(i);
+          console.log(data.points[i]);
+          pn = data.points[i].pointNumber;
+          tn = data.points[i].curveNumber;
+          pi = data.points[i].pointIndex;
+          colors = data.points[i].data.marker.color;
+        };
+        colors[pn] = '#808000';
+      
+        var update = {'marker':{color: colors, size:16}};
+        Plotly.restyle('bar', update, [tn]);
+      });
+      
+      barPlot.on('plotly_unhover', function(data){
+        var pn='',
+            tn='',
+            pi='',
+            colors=[];
+        for(var i=0; i < data.points.length; i++){
+          pn = data.points[i].pointNumber;
+          tn = data.points[i].curveNumber;
+          pi = data.points[i].pointIndex;
+          colors = data.points[i].data.marker.color;
+        };
+        colors[pn] = '#1371a4';
+      
+        var update = {'marker':{color: colors}};
+        Plotly.restyle('bar', update, [tn]);
+      });
+
+    }).catch(err => {
+        // Do something for an error here
+        console.log("Error Reading data " + err);
+    });    
 };
 
-    function updatebar2(theState){
+function updatebar2New(theState){
 
-        //Get the state specific data for analysis
-        d3.json(`/state_data/count_by_day/${theState}`)
-        .then(function (json) {
+    //Get the state specific data for analysis
+    d3.json(`/state_data/count_by_day/${theState}`)
+    .then(function (json) {
 
-            y = [];
-            x = [];
-            for(var i = 0; i < 11; i++) {
-                var obj = json[i];
-                y.push(obj.accident_date);
-                x.push(obj.accident_count);
-            };
-
-        // Create a horizontal bar chart for the top 10 accident days
-        let trace1 = {
-            x: x,
-            y: y,
-            type: "bar",
-            orientation: "h",
-            //text: top_otu_labels,
+        y = [];
+        x = [];
+        for(var i = 0; i < json.length; i++) {
+            var obj = json[i];
+            y.push(obj.accident_date);
+            x.push(obj.accident_count);
         };
 
-        let content = [trace1];
+    bar2Plot = document.getElementById('bar2'),
+     x = x,
+     y = y,
+     colors =['#1371a4','#1371a4','#1371a4',
+              '#1371a4','#1371a4','#1371a4',
+              '#1371a4','#1371a4',
+              '#1371a4','#1371a4'],
+     data = [{x:x, y:y,
+              type:'bar',
+              orientation: "h",
+              mode:'markers',marker:{color:colors}}],
+     layout = {
+        hovermode:'closest',
+        yaxis:{title:"Accident Date"},
+        xaxis:{title:"Accident Count"}
+      };
 
-        let layout = {
-            yaxis:{title:"Accident Date"},
-            xaxis:{title:"Accident Count"}
+    Plotly.newPlot("bar2",data,layout);
+
+    bar2Plot.on('plotly_hover', function(data){
+        console.log(data);
+        var pn='',
+            tn='',
+            pi='',
+            colors=[];
+        for(var i=0; i < data.points.length; i++){
+          console.log(i);
+          console.log(data.points[i]);
+          pn = data.points[i].pointNumber;
+          tn = data.points[i].curveNumber;
+          pi = data.points[i].pointIndex;
+          colors = data.points[i].data.marker.color;
         };
+        colors[pn] = '#808000';
+      
+        var update = {'marker':{color: colors}};
+        Plotly.restyle('bar2', update, [tn]);
+      });
+      
+      bar2Plot.on('plotly_unhover', function(data){
+        var pn='',
+            tn='',
+            pi='',
+            colors=[];
+        for(var i=0; i < data.points.length; i++){
+          pn = data.points[i].pointNumber;
+          tn = data.points[i].curveNumber;
+          pi = data.points[i].pointIndex;
+          colors = data.points[i].data.marker.color;
+        };
+        colors[pn] = '#1371a4';
+      
+        var update = {'marker':{color: colors, size:16}};
+        Plotly.restyle('bar2', update, [tn]);
+      });
 
-        Plotly.newPlot("bar2",content,layout);
-        }).catch(err => {
-            // Do something for an error here
-            console.log("Error Reading data " + err);
-          });     
+    }).catch(err => {
+        // Do something for an error here
+        console.log("Error Reading data " + err);
+    });    
 };
     
 //Update the visualizations based on the subject selected
@@ -140,13 +223,11 @@ function updatePage(){
      else{
        theState = "FL";
        console.log("subject if/else");
-       let alert = d3.select("#alert");
-       alert.text('Clicked '+theState );
      };
 
     updateLine(theState);
-    updatebar1(theState);
-    updatebar2(theState);
+    updatebar1New(theState);
+    updatebar2New(theState);
 };
 
 // Get the list of distinct states for populating the drop down select list on the page

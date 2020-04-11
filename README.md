@@ -6,21 +6,36 @@
 # Dataset: https://www.kaggle.com/sobhanmoosavi/us-accidents
 Citations 1 & 2
 
-Analyze traffic accident data to uncover correlations between associated metrics. Provide visualizations to tell the story of the correlations in traffic data. Attributes analyzed time, severity, by location, weather and day or night.
+Analyze traffic accident data to uncover correlations between associated metrics. Provide visualizations to tell the story of the correlations in traffic data. Attributes analyzed time, and location.
 
-Will likely reduce dataset by time or location depending on initial cleansing and analysis.
+We have focused on accidents in 2019.
 
 # Final analysis:
  
-  * Will be located in GitHub repo: https://github.com/evansvillewy/Project-2
-  * Will be deployed to a public web hosting site.
-  * Provide insights into the US Traffic Accident data
-  * Data will be stored in a database
-  * Data/analysis will be delivered via web dashboard pages
-  * Allow for drilling into the US Traffic data interactively
+  * Source is located in GitHub repo: https://github.com/evansvillewy/Project-2
+  * Is deployed to: http://evansvillewy.pythonanywhere.com/ 
+  * Provides insights into the US Traffic Accident data
+  * Data will is stored in a SQLite database
+  * Data/analysis is delivered via web dashboard pages
+  * Allows for exploration by state for US Traffic data interactively
+
+# US Accidents in 2019 Dashboard
+
+![US](Images/dashboard.PNG)
 
 # Inspiration
 Citation 3
+
+# Table of Contents
+
+1. DO_NOT_GRADE - resources for our project
+2. Images - Images used by our project
+3. Resources - database used by the dashboard
+4. templates - html files required
+5. load_accidens_sqlite.ipynb - jupyter notebook as a workspace for data cleaning and database loading
+6. app.py - the main web application and endpoints
+7. README.md - this
+8. US Traffic Accidents in 2019 presentation.pptx - presentation of our project
 
 ![US](Images/US.PNG)
 

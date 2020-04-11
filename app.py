@@ -110,13 +110,13 @@ def state_weekday_data(theState):
     
     # Use Pandas to perform the sql query
     stmt = (f'''select count(*) accident_count, weekday from(SELECT strftime('%w',start_time) day_number,
-        CASE strftime('%w',start_time) WHEN '0' THEN 'Sunday'
-        WHEN '1' THEN 'Monday'
-        WHEN '2' THEN 'Tuesday'
-        WHEN '3' THEN 'Wednesday'
-        WHEN '4' THEN 'Thursday'
-        WHEN '5' THEN 'Friday'
-        WHEN '6' THEN 'Saturday' END weekday
+        CASE strftime('%w',start_time) WHEN '0' THEN 'Sun'
+        WHEN '1' THEN 'Mon'
+        WHEN '2' THEN 'Tue'
+        WHEN '3' THEN 'Wed'
+        WHEN '4' THEN 'Thu'
+        WHEN '5' THEN 'Fri'
+        WHEN '6' THEN 'Sat' END weekday
         FROM accidents a 
         WHERE state='{theState}')
         group by weekday
@@ -137,11 +137,12 @@ def state_count_by_day(theState):
     session = Session(db.engine)  
     
     # Use Pandas to perform the sql query
-    stmt = (f'''SELECT strftime('%d-%m-%Y',start_time) accident_date,count(*) accident_count
+    stmt = (f'''SELECT strftime('%m-%m-%Y',start_time) accident_date,count(*) accident_count
         FROM accidents a 
         WHERE state='{theState}'
         group by accident_date
-        order by accident_count desc;''')             
+        order by accident_count desc
+        limit 10;''')             
     
     results = pd.read_sql_query(stmt, db.session.bind)
     
